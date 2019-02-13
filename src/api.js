@@ -63,7 +63,7 @@ export const getImagesConcurrently = breeds =>
       .map(S.filter(v => !!v))
   )
 
-export function useApi() {
+export function useApi(fetchImages, fetchBreeds) {
   const [loading, setLoading] = useState(true)
   const [images, setImages] = useState([])
   const [breedData, setBreeds] = useState({ breeds: [], letters: [] })
@@ -71,7 +71,7 @@ export function useApi() {
   const cancellation = useRef(null)
 
   const getImages = ids =>
-    getImagesConcurrently(ids).fork(
+    fetchImages(ids).fork(
       // rejection branch
       err => {
         console.log(err)
@@ -87,7 +87,7 @@ export function useApi() {
     )
 
   useEffect(() => {
-    getBreeds.fork(
+    fetchBreeds.fork(
       err => {
         setLoading(false)
         console.log(err)

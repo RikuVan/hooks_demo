@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { getImagesConcurrently, getBreeds } from "./api"
 import { useApi } from "./useApi"
 import { useObservable } from "./useObservable"
@@ -9,16 +9,19 @@ import "./App.css"
 import { zip, interval, empty } from "rxjs"
 import { switchMap } from "rxjs/operators"
 
+import { ThemeContext } from "./StyleContext"
+
 function useToggle(initial) {
   const [isToggled, setToggled] = useState(initial)
   return [isToggled, () => setToggled(!isToggled)]
 }
 
 function App() {
-  const superColor = randomColor({ luminosity: "light" })
   const api = useApi(getImagesConcurrently, getBreeds)
   const [autoTransition, pause] = useToggle(true)
   const [delay, setDelay] = useState(2000)
+  const { theme } = useContext(ThemeContext)
+  const superColor = randomColor({ luminosity: theme.light })
 
   useObservable(
     (delay$, shouldTransition$) =>

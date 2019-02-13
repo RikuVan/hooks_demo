@@ -1,4 +1,4 @@
-import styled, { keyframes, createGlobalStyle } from "styled-components"
+import styled, { keyframes, createGlobalStyle, css } from "styled-components"
 import * as React from "react"
 import * as P from "polished"
 
@@ -11,7 +11,24 @@ createGlobalStyle`
   }
 `
 
-export const LetterButton = styled.button`
+const center = () => css`
+  display: flex;
+  justify-content: center;
+  align-items: space-around;
+`
+
+export const Flex = styled.div`
+  ${center()}
+  padding: 10px;
+  ${({ column }) =>
+    column &&
+    css`
+      flex-direction: column;
+      align-items: center;
+    `}
+`
+
+export const LButton = styled.button`
   display: flex;
   min-width: 10px;
   border-radius: 3px;
@@ -24,15 +41,11 @@ export const LetterButton = styled.button`
 `
 
 export const Nav = styled.nav`
-  display: flex;
-  justify-content: center;
-  align-items: space-around;
+  ${center()}
 `
 
 export const ArrowButtons = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: space-around;
+  ${center()}
   button:last-of-type {
     margin-left: 3px;
   }
@@ -76,7 +89,7 @@ const Spinner = styled.div`
 
 const SpinnerWrapper = styled.div`
   position: absolute;
-  top: 25%;
+  top: 50%;
   left: 50%;
   margin: -20px 0 0 -20px;
   background: ${({ color }) => P.lighten(0.1, color)};
@@ -115,9 +128,7 @@ export const Pic = ({ name, src }) => (
   </PicWrapper>
 )
 
-const LinkWrapper = styled.div`
-  display: flex;
-  justify-content: center;
+const LinkWrapper = styled(Flex)`
   align-items: center;
 `
 
@@ -133,7 +144,7 @@ const Link = styled.a`
 
 export const SourceLink = ({ color }) => (
   <LinkWrapper>
-    <Link href="https://glitch.com/edit/#!/handsomely-twister" color={color}>
+    <Link href="todo" color={color}>
       SOURCE
     </Link>
   </LinkWrapper>
